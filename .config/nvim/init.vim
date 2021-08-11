@@ -1,7 +1,3 @@
-" source $HOME/.config/nvim/plug-config/lsp-config.vim
-" source $HOME/.config/nvim/plug-config/compe-config.lua
-
-" curl reminder to download plug.vim
 
 set nocompatible		" be iMproved, required
 filetype off			" required
@@ -48,9 +44,7 @@ lua require'lspconfig'.html.setup{on_attach=require'completion'.on_attach;}
 
 " Use completion-nvim in every buffer
 autocmd BufEnter * lua require'completion'.on_attach()
-" luafile $HOME/.config/nvim/plug-config/lsp_config.lua
-" luafile $HOME/.config/nvim/plug-config/compe-config.lua
-" source $HOME/.config/nvim/plug-config/lsp_config.vim
+
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -70,9 +64,21 @@ autocmd Filetype html setlocal ts=2 sw=2 sts=2
 autocmd Filetype php setlocal ts=4 sw=4 sts=4 expandtab
 autocmd BufRead,BufNewFile *.css setlocal tabstop=2 shiftwidth=2 softtabstop=2
 
+" Autoinstall missing plugins on startup
+autocmd VimEnter *
+  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall --sync | q
+  \| endif
+
 
 """SNIPPET SETTING
 let g:completion_enable_snippet = 'vim-vsnip'
 
 
 
+
+""" For LSPS to function, you need to install LSPs!
+" Examples
+" npm install -g typescript typescript-language-server
+" npm install -g pyright
+" npm i -g vscode-langservers-extracted
